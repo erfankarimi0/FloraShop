@@ -15,5 +15,7 @@ public partial class Order
 
     public decimal TotalAmount { get; set; }
 
-    public virtual ICollection<MidorderProduct> MidorderProducts { get; set; } = new List<MidorderProduct>();
+    public int ShoppingCartId { get; set; }
+
+    public virtual ShoppingCart ShoppingCart { get; set; } = null!;
 }

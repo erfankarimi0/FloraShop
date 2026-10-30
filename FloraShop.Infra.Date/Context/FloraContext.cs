@@ -16,29 +16,32 @@ public partial class FloraContext : DbContext
     {
     }
 
-    public virtual DbSet<MidorderProduct> MidorderProducts { get; set; }
+    public virtual DbSet<MidshoppingCartProduct> MidshoppingCartProducts { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<MidorderProduct>(entity =>
+        modelBuilder.Entity<MidshoppingCartProduct>(entity =>
         {
-            entity.ToTable("MIDOrderProduct");
+            entity.HasKey(e => e.Id).HasName("PK_MIDOrderProduct");
+
+            entity.ToTable("MIDShoppingCartProduct");
 
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.MidorderProducts)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MIDOrderProduct_Order");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.MidorderProducts)
+            entity.HasOne(d => d.Product).WithMany(p => p.MidshoppingCartProducts)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MIDOrderProduct_Product");
+
+            entity.HasOne(d => d.ShoppingCart).WithMany(p => p.MidshoppingCartProducts)
+                .HasForeignKey(d => d.ShoppingCartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MIDOrderProduct_ShoppingCart");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -51,6 +54,11 @@ public partial class FloraContext : DbContext
             entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdateDate).HasPrecision(0);
+
+            entity.HasOne(d => d.ShoppingCart).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.ShoppingCartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_ShoppingCart");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -66,6 +74,15 @@ public partial class FloraContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(20)
                 .HasDefaultValue("Available");
+            entity.Property(e => e.UpdateDate).HasPrecision(0);
+        });
+
+        modelBuilder.Entity<ShoppingCart>(entity =>
+        {
+            entity.ToTable("ShoppingCart");
+
+            entity.Property(e => e.InsertDate).HasPrecision(0);
+            entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.UpdateDate).HasPrecision(0);
         });
 

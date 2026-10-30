@@ -21,5 +21,5 @@ public partial class Product
 
     public string Status { get; set; } = null!;
 
-    public virtual ICollection<MidorderProduct> MidorderProducts { get; set; } = new List<MidorderProduct>();
+    public virtual ICollection<MidshoppingCartProduct> MidshoppingCartProducts { get; set; } = new List<MidshoppingCartProduct>();
 }
