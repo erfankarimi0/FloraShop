@@ -21,4 +21,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FloraShop.Application\FloraShop.Application.csproj" />
+    <ProjectReference Include="..\FloraShop.Domain\FloraShop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

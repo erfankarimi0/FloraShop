@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FloraShop.Infra.Date\FloraShop.Infra.Data.csproj" />
+    <ProjectReference Include="..\FloraShop.Infra.IoC\FloraShop.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FloraShop.Application\FloraShop.Application.csproj" />
+    <ProjectReference Include="..\FloraShop.Infra.Date\FloraShop.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>

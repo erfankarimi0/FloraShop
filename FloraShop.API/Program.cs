@@ -1,7 +1,10 @@
 using FloraShop.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using FloraShop.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddUserSecrets<FloraContext>();
 
 // Add services to the container.
 
@@ -11,6 +14,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<FloraContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("FloraDb")));
+// Register Application Services
+DependencyContainer.RegisterServices(builder.Services);
 
 var app = builder.Build();
 
